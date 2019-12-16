@@ -8,7 +8,7 @@ workflows:
     jobs:
       - architect/go-build:
           name: build
-          binary: hello-operator                     # change this
+          binary: master-operator
           filters:
             tags:
               only: /^v.*/
