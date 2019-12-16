@@ -2,6 +2,6 @@ FROM alpine:3.10
 
 RUN apk add --no-cache ca-certificates
 
-ADD ./template-operator /template-operator
+ADD ./master-operator /master-operator
 
-ENTRYPOINT ["/template-operator"]
+ENTRYPOINT ["/master-operator"]
