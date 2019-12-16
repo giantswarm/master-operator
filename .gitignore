@@ -1,4 +1,4 @@
 *.swp
 TODO
-master-operator
+/master-operator
 !vendor/**
