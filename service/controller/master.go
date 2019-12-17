@@ -1,13 +1,13 @@
 package controller
 
 import (
-	//"github.com/giantswarm/apiextensions/pkg/apis/cluster/v1alpha1"
+	infrastructurev1alpha2 "github.com/giantswarm/apiextensions/pkg/apis/infrastructure/v1alpha2"
 	"github.com/giantswarm/k8sclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
 	"github.com/giantswarm/operatorkit/controller"
-	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	apiv1alpha2 "sigs.k8s.io/cluster-api/api/v1alpha2"
 
 	"github.com/giantswarm/master-operator/pkg/project"
 )
@@ -32,12 +32,12 @@ func NewMaster(config MasterConfig) (*Master, error) {
 	var operatorkitController *controller.Controller
 	{
 		c := controller.Config{
-			//CRD:          v1alpha1.NewMachineDeploymentCRD,
+			CRD:          infrastructurev1alpha2.NewMachineDeploymentCRD(),
 			K8sClient:    config.K8sClient,
 			Logger:       config.Logger,
 			ResourceSets: resourceSets,
 			NewRuntimeObjectFunc: func() runtime.Object {
-				return new(corev1.Pod)
+				return new(apiv1alpha2.MachineDeployment)
 			},
 
 			// Name is used to compute finalizer names. This here results in something
