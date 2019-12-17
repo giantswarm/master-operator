@@ -1,7 +1,7 @@
 package controller
 
 import (
-	clusterv1alpha1 "github.com/giantswarm/apiextensions/pkg/apis/cluster/v1alpha1"
+	"github.com/giantswarm/apiextensions/pkg/apis/cluster/v1alpha1"
 	"github.com/giantswarm/k8sclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
@@ -32,7 +32,7 @@ func NewMaster(config MasterConfig) (*Master, error) {
 	var operatorkitController *controller.Controller
 	{
 		c := controller.Config{
-			CRD:          clusterv1alpha1.NewMachineDeploymentCRD(),
+			CRD:          v1alpha1.NewMachineDeploymentCRD,
 			K8sClient:    config.K8sClient,
 			Logger:       config.Logger,
 			ResourceSets: resourceSets,

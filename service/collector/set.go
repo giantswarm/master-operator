@@ -23,13 +23,17 @@ type Set struct {
 func NewSet(config SetConfig) (*Set, error) {
 	var err error
 
-	// TODO: Wiring for your collectors goes here! Check aws-operator as reference!
-
+	master, err := NewMaster(MasterConfig{})
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
 	var collectorSet *collector.Set
 	{
 		c := collector.SetConfig{
-			Collectors: []collector.Interface{},
-			Logger:     config.Logger,
+			Collectors: []collector.Interface{
+				master,
+			},
+			Logger: config.Logger,
 		}
 
 		collectorSet, err = collector.NewSet(c)

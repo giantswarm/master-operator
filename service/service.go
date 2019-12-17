@@ -33,18 +33,24 @@ type Service struct {
 	Version *version.Service
 
 	bootOnce          sync.Once
-	masterController    *controller.Master
+	masterController  *controller.Master
 	operatorCollector *collector.Set
 }
 
 // New creates a new configured service object.
 func New(config Config) (*Service, error) {
+	var serviceAddress string
 	// Settings.
 	if config.Flag == nil {
 		return nil, microerror.Maskf(invalidConfigError, "config.Flag must not be empty")
 	}
 	if config.Viper == nil {
 		return nil, microerror.Maskf(invalidConfigError, "config.Viper must not be empty")
+	}
+	if config.Flag.Service.Kubernetes.KubeConfig == "" {
+		serviceAddress = config.Viper.GetString(config.Flag.Service.Kubernetes.Address)
+	} else {
+		serviceAddress = ""
 	}
 
 	// Dependencies.
@@ -79,7 +85,10 @@ func New(config Config) (*Service, error) {
 	{
 		c := k8sclient.ClientsConfig{
 			Logger: config.Logger,
-
+			// TODO: If you are watching a new CRD, include here the AddToScheme function from apiextensions.
+			// SchemeBuilder: k8sclient.SchemeBuilder{
+			//     corev1alpha1.AddToScheme,
+			// },
 			RestConfig: restConfig,
 		}
 
@@ -137,7 +146,7 @@ func New(config Config) (*Service, error) {
 		Version: versionService,
 
 		bootOnce:          sync.Once{},
-		masterController:    masterController,
+		masterController:  masterController,
 		operatorCollector: operatorCollector,
 	}
 
