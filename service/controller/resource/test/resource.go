@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	Name = "todo"
+	Name = "master"
 )
 
 type Config struct {

@@ -12,12 +12,12 @@ import (
 	"github.com/giantswarm/master-operator/service/controller/resource/test"
 )
 
-type todoResourceSetConfig struct {
+type masterResourceSetConfig struct {
 	K8sClient k8sclient.Interface
 	Logger    micrologger.Logger
 }
 
-func newTODOResourceSet(config todoResourceSetConfig) (*controller.ResourceSet, error) {
+func newMasterResourceSet(config masterResourceSetConfig) (*controller.ResourceSet, error) {
 	var err error
 
 	var testResource resource.Interface

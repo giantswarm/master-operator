@@ -9,7 +9,7 @@ func NewVersionBundle() versionbundle.Bundle {
 		Changelogs: []versionbundle.Changelog{
 			{
 				Component:   "master-operator",
-				Description: "TODO",
+				Description: "Master",
 				Kind:        versionbundle.KindChanged,
 			},
 		},
